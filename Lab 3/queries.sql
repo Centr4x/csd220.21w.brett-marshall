@@ -18,11 +18,11 @@ from orders
 group by status 
 order by count(*) desc;
 
-select productLine, group_concat( distinct productName separator ';') as products 
+select productLine, group_concat( distinct productName order by productName separator ';') as products 
 from products 
 group by productLine ;
 
-select paymentDate as 'year', CAST(AVG(amount) as decimal(10,2)) as 'average payments', sum(amount) as `total payments` 
+select year(paymentDate) as `year`, ROUND(AVG(amount), 2) as 'average payments', ROUND(sum(amount), 2) as `total payments` 
 from payments 
 group by year(paymentDate);
 
@@ -37,6 +37,6 @@ select customerNumber, count(distinct orderNumber) as `orders_shipped`
 from orders 
 where (year(orderDate) = 2004) and (status = 'shipped')
 group by customerNumber
-having `orders_shipped` > 5
+having `orders_shipped` >= 5
 order by `orders_shipped` desc
 ;
