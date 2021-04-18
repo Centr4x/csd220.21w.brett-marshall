@@ -71,7 +71,7 @@ async function passwordsMatch(userPassword, storedPassword) {
     // TODO: do the password comparison using argon2
     try{
         if(await argon2.verify(storedPassword,userPassword)){
-            return userPassword === storedPassword;
+            return true;
         }else{
             console.log("passwords did not match!");
         }
